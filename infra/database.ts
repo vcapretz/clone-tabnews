@@ -10,6 +10,7 @@ async function query<T extends QueryResultRow>(
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
   });
+
   await client.connect();
 
   const result = await client.query<T>(queryObject);
