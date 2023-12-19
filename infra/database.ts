@@ -2,6 +2,7 @@ import { Client, QueryConfig, QueryResult, QueryResultRow } from "pg";
 
 async function query<T extends QueryResultRow>(
   queryObject: string | QueryConfig,
+  values?: any[],
 ): Promise<QueryResult<T>> {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
@@ -13,7 +14,7 @@ async function query<T extends QueryResultRow>(
 
   await client.connect();
 
-  const result = await client.query<T>(queryObject);
+  const result = await client.query<T>(queryObject, values);
 
   await client.end();
 
