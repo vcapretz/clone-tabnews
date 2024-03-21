@@ -6,17 +6,21 @@
   "license": "MIT",
   "scripts": {
     "dev": "npm run services:up && next dev",
-    "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "format": "prettier --write .",
     "lint": "next lint",
+    "migration:create": "node-pg-migrate -m infra/migrations create",
+    "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",
     "services:down": "docker compose -f infra/compose.yaml down",
     "services:stop": "docker compose -f infra/compose.yaml stop",
     "services:up": "docker compose -f infra/compose.yaml up -d",
-    "test": "vitest",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test": "vitest"
   },
   "dependencies": {
-    "next": "^13.5.4",
+    "dotenv": "^16.4.5",
+    "next": "^14.1.0",
+    "node-pg-migrate": "^6.2.2",
     "pg": "^8.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -33,10 +37,11 @@
     "postcss": "^8.4.31",
     "prettier": "3.0.3",
     "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "5.2.2",
     "vitest": "^0.34.6"
   },
   "volta": {
-    "node": "18.16.0"
+    "node": "20.11.1"
   }
 }

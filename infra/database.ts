@@ -10,6 +10,7 @@ async function query<T extends QueryResultRow>(
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
+    ssl: getSSLValues(),
   });
 
   await client.connect();
@@ -22,3 +23,13 @@ async function query<T extends QueryResultRow>(
 }
 
 export const database = { query };
+
+function getSSLValues() {
+  if (process.env.POSTGRES_CA) {
+    return {
+      ca: process.env.POSTGRES_CA,
+    };
+  }
+
+  return process.env.NODE_ENV === "development" ? false : true;
+}
